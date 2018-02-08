@@ -1,0 +1,11 @@
+{
+  "extends": "tslint:all",
+  "rules": {
+    "completed-docs": false,
+    quotemark: [
+      true,
+      "single"
+    ],
+    "trailing-comma": false
+  }
+}
