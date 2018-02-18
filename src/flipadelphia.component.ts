@@ -19,19 +19,16 @@ import { FLIPPER_SERVICE, FlipperService } from './flipper-service';
   `
 })
 export class FlipadelphiaComponent {
-  constructor(@Inject(FEATURE_TOGGLES) private featureToggles: FeatureToggles,
-              @Inject(FLIPPER_SERVICE) private flipperService: FlipperService) {}
-
   toggles = Object.keys(this.featureToggles)
-                  .map((key) => {
-                    return { key: key, value: this.featureToggles[key] };
-                  });
+                  .map(key => ({ key, value: this.featureToggles[key] }));
+
+  constructor(@Inject(FEATURE_TOGGLES) private readonly featureToggles: FeatureToggles,
+              @Inject(FLIPPER_SERVICE) private readonly flipperService: FlipperService) {}
 
   public setToggleState(target: HTMLInputElement) {
-    if(target.checked) {
+    if (target.checked) {
       this.flipperService.enable(target.id);
-    }
-    else {
+    } else {
       this.flipperService.disable(target.id);
     }
   }

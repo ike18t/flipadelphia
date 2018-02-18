@@ -35,6 +35,9 @@
     "url": "https://github.com/ike18t/flipadelphia/issues"
   },
   "homepage": "https://github.com/ike18t/flipadelphia#readme",
+  "peerDependencies": {
+    "@angular/core": "5.x"
+  },
   "devDependencies": {
     "@angular/common": "5.x",
     "@angular/compiler": "5.x",

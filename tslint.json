@@ -1,11 +1,28 @@
 {
   "extends": "tslint:all",
   "rules": {
+    "arrow-parens": false,
     "completed-docs": false,
-    quotemark: [
+    "interface-name": false,
+    "member-access": false,
+    "newline-before-return": false,
+    "newline-per-chained-call": false,
+    "no-floating-promises": false,
+    "no-implicit-dependencies": [true, "dev"],
+    "no-magic-numbers": false,
+    "no-parameter-properties": false,
+    "no-submodule-imports": false,
+    "no-unnecessary-class": false,
+    "no-unsafe-any": false,
+    "no-unused-variable": true,
+    "quotemark": [
       true,
       "single"
     ],
-    "trailing-comma": false
+    "strict-boolean-expressions": [
+      "allow-boolean-or-undefined"
+    ],
+    "trailing-comma": false,
+    "typedef": false
   }
 }

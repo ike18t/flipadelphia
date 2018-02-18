@@ -28,7 +28,7 @@ describe('LocalStorageFlipperService', () => {
 
     it('uses the correct key for local storage lookup', () => {
       mockStorage.extend({ getItem: () => '[]' });
-      service.isEnabled('bar')
+      service.isEnabled('bar');
       expect(mockStorage.Object.getItem).toHaveBeenCalledWith('FLIPADELPHIA');
     });
   });
@@ -37,21 +37,21 @@ describe('LocalStorageFlipperService', () => {
     it('does not add an already enabled toggle to storage', () => {
       mockStorage.extend({ getItem: () => '["bar"]',
                            setItem: () => Mock.ANY_FUNC });
-      service.enable('bar')
+      service.enable('bar');
       expect(mockStorage.Object.setItem).not.toHaveBeenCalled();
     });
 
     it('adds toggle to storage', () => {
       mockStorage.extend({ getItem: () => '[]',
                            setItem: () => Mock.ANY_FUNC });
-      service.enable('bar')
+      service.enable('bar');
       expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '["bar"]');
     });
 
     it('appends the toggle to storage array', () => {
       mockStorage.extend({ getItem: () => '["foo"]',
                            setItem: () => Mock.ANY_FUNC });
-      service.enable('bar')
+      service.enable('bar');
       expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '["foo","bar"]');
     });
   });
@@ -60,14 +60,14 @@ describe('LocalStorageFlipperService', () => {
     it('does not write to local storage if the toggle is already disabled', () => {
       mockStorage.extend({ getItem: () => '[]',
                            setItem: () => Mock.ANY_FUNC });
-      service.disable('bar')
+      service.disable('bar');
       expect(mockStorage.Object.setItem).not.toHaveBeenCalled();
     });
 
     it('removes the toggle from local storage', () => {
       mockStorage.extend({ getItem: () => '["foo"]',
                            setItem: () => Mock.ANY_FUNC });
-      service.disable('foo')
+      service.disable('foo');
       expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '[]');
     });
   });

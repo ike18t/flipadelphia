@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Mock } from 'ts-mocks';
-import { FlipadelphiaComponent } from './flipadelphia.component';
 import { FEATURE_TOGGLES } from './feature-toggles';
+import { FlipadelphiaComponent } from './flipadelphia.component';
 import { FLIPPER_SERVICE, FlipperService } from './flipper-service';
 
 describe('FlipadelphiaComponent', () => {
@@ -13,16 +13,16 @@ describe('FlipadelphiaComponent', () => {
       declarations: [ FlipadelphiaComponent ],
       providers: [
         { provide: FEATURE_TOGGLES,
-          useValue: { foo: true,
-                      bar: false,
+          useValue: { bar: false,
+                      bazz: true,
                       bizz: true,
                       buzz: false,
-                      bazz: true }
+                      foo: true }
         },
         { provide: FLIPPER_SERVICE,
-          useValue: new Mock<FlipperService>({ isEnabled: () => false,
+          useValue: new Mock<FlipperService>({ disable: Mock.ANY_FUNC,
                                                enable: Mock.ANY_FUNC,
-                                               disable: Mock.ANY_FUNC }).Object }
+                                               isEnabled: () => false }).Object }
       ]
     })
     .compileComponents()
