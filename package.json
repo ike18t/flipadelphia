@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/ike18t/flipadelphia#readme",
   "peerDependencies": {
+    "@angular/common": "5.x",
     "@angular/core": "5.x"
   },
   "devDependencies": {
@@ -67,7 +68,7 @@
     "zone.js": "^0.8.14"
   },
   "directories": {
-    "lib": "lib"
+    "src": "src"
   },
   "dependencies": {}
 }

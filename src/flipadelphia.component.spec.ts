@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { Mock } from 'ts-mocks';
 import { FEATURE_TOGGLES } from './feature-toggles';
 import { FlipadelphiaComponent } from './flipadelphia.component';
-import { FLIPPER_SERVICE, FlipperService } from './flipper-service';
+import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
 
 describe('FlipadelphiaComponent', () => {
   let fixture: ComponentFixture<FlipadelphiaComponent>;

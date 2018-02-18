@@ -1,5 +1,5 @@
 import { Mock } from 'ts-mocks';
-import { LocalStorageFlipperService } from './local-storage-flipper-service';
+import { LocalStorageFlipperService } from './local-storage-flipper.service';
 
 describe('LocalStorageFlipperService', () => {
   let service: LocalStorageFlipperService;

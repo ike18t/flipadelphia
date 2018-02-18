@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FEATURE_TOGGLES, FeatureToggles } from './feature-toggles';
-import { FLIPPER_SERVICE, FlipperService } from './flipper-service';
+import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
 
 @Component({
   selector: 'flipadelphia',

@@ -1,6 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { FEATURE_TOGGLES, FeatureToggles } from './feature-toggles';
-import { FlipperService } from './flipper-service';
+import { FlipperService } from './flipper.service';
 
 export const LOCAL_STORAGE = new InjectionToken<Storage>('LocalStorage');
 
