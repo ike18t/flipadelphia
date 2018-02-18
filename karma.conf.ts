@@ -14,7 +14,8 @@ module.exports = (config: any) => {
       'node_modules/zone.js/dist/jasmine-patch.js',
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
-      { pattern: 'lib/**/*.ts' }
+      'karma-test-shim.ts',
+      { pattern: 'src/**/*.ts' }
     ],
     frameworks: ['jasmine', 'karma-typescript'],
     logLevel: config.LOG_INFO,

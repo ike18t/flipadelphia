@@ -20,6 +20,6 @@
   },
   "include": [
     "index.ts",
-    "lib/**/*"
+    "src/**/*"
   ]
 }
