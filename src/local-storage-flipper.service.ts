@@ -15,23 +15,23 @@ export class LocalStorageFlipperService implements FlipperService {
     return JSON.parse(this.localStorage.getItem(this.LOCAL_STORAGE_KEY) || '') || [] as string[];
   }
 
-  disable(toggleName: string): void {
-    if (!this.isEnabled(toggleName)) {
+  async disable(toggleName: string): Promise<void> {
+    if (!await this.isEnabled(toggleName)) {
       return;
     }
     this.localStorage.setItem(this.LOCAL_STORAGE_KEY,
                               JSON.stringify(this.enabledToggles.filter((toggle: string) => toggle !== toggleName)));
   }
 
-  enable(toggleName: string): void {
-    if (this.isEnabled(toggleName)) {
+  async enable(toggleName: string): Promise<void> {
+    if (await this.isEnabled(toggleName)) {
       return;
     }
     this.localStorage.setItem(this.LOCAL_STORAGE_KEY,
                               JSON.stringify(this.enabledToggles.concat(toggleName)));
   }
 
-  isEnabled(toggleName: string): boolean {
+  async isEnabled(toggleName: string): Promise<boolean> {
     if (this.featureToggles[toggleName]) {
       return true;
     }

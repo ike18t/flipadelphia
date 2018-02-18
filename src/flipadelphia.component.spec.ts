@@ -22,7 +22,7 @@ describe('FlipadelphiaComponent', () => {
         { provide: FLIPPER_SERVICE,
           useValue: new Mock<FlipperService>({ disable: Mock.ANY_FUNC,
                                                enable: Mock.ANY_FUNC,
-                                               isEnabled: () => false }).Object }
+                                               isEnabled: () => Promise.resolve(false) }).Object }
       ]
     })
     .compileComponents()

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser'
 import { Mock } from 'ts-mocks';
 import { FeatureFlipDirective } from './feature-flip.directive';
 import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
@@ -25,7 +26,7 @@ xdescribe('FeatureFlip', () => {
         { provide: FLIPPER_SERVICE,
           useValue: new Mock<FlipperService>({ disable: Mock.ANY_FUNC,
                                                enable: Mock.ANY_FUNC,
-                                               isEnabled: () => false }).Object },
+                                               isEnabled: () => Promise.resolve(false) }).Object },
         // { provide: TemplateRef, useValue: new Mock<TemplateRef<any>>().Object },
         // { provide: ViewContainerRef, useValue: new Mock<ViewContainerRef>({ clear: Mock.ANY_FUNC }).Object }
       ]
@@ -37,9 +38,8 @@ xdescribe('FeatureFlip', () => {
     });
   }));
 
-  it('does not render the element that has the directive if the toggle value is false', () => {
-    console.log(fixture.debugElement.nativeElement.innerHTML);
-    // const debugElement = fixture.debugElement.query(By.css('div'));
-    // expect(debugElement).toBeNull();
+  xit('does not render the element that has the directive if the toggle value is false', () => {
+    const debugElement = fixture.debugElement.query(By.css('div'));
+    expect(debugElement).toBeNull();
   });
 });
