@@ -12,7 +12,7 @@ export class LocalStorageFlipperService implements FlipperService {
               @Inject(LOCAL_STORAGE) private readonly localStorage: Storage) {}
 
   private get enabledToggles() {
-    return JSON.parse(this.localStorage.getItem(this.LOCAL_STORAGE_KEY) || '') || [] as string[];
+    return JSON.parse(this.localStorage.getItem(this.LOCAL_STORAGE_KEY) as string) || [] as string[];
   }
 
   async disable(toggleName: string): Promise<void> {

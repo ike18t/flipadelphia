@@ -19,11 +19,12 @@ import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
   `
 })
 export class FlipadelphiaComponent {
-  toggles = Object.keys(this.featureToggles)
-                  .map(key => ({ key, value: this.featureToggles[key] }));
+  toggles: any;
 
-  constructor(@Inject(FEATURE_TOGGLES) private readonly featureToggles: FeatureToggles,
-              @Inject(FLIPPER_SERVICE) private readonly flipperService: FlipperService) {}
+  constructor(@Inject(FEATURE_TOGGLES) readonly featureToggles: FeatureToggles,
+              @Inject(FLIPPER_SERVICE) private readonly flipperService: FlipperService) {
+    this.loadToggles(featureToggles);
+  }
 
   public setToggleState(target: HTMLInputElement) {
     if (target.checked) {
@@ -31,5 +32,11 @@ export class FlipadelphiaComponent {
     } else {
       this.flipperService.disable(target.id);
     }
+  }
+
+  private async loadToggles(featureToggles: FeatureToggles) {
+    const toggles = Object.keys(featureToggles);
+    const values = await Promise.all(toggles.map(key => this.flipperService.isEnabled(key)));
+    this.toggles = toggles.map((toggle, index) => ({ key: toggle, value: values[index] }));
   }
 }

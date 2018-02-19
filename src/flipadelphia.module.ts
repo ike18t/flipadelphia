@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FeatureFlipDirective } from './feature-flip.directive';
 import { FEATURE_TOGGLES, FeatureToggles } from './feature-toggles';
 import { FlipadelphiaComponent } from './flipadelphia.component';
@@ -19,6 +20,7 @@ import { LOCAL_STORAGE, LocalStorageFlipperService } from './local-storage-flipp
     FlipadelphiaComponent
   ],
   imports: [
+    BrowserModule,
     CommonModule
   ],
   providers: [

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser'
+import { By } from '@angular/platform-browser';
 import { Mock } from 'ts-mocks';
 import { FeatureFlipDirective } from './feature-flip.directive';
 import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
@@ -11,9 +11,9 @@ import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
     <div [feature-flip]="'foo'">'hi'</div>
   `
 })
-export class ExampleComponentContainer {}
+class ExampleComponentContainer {}
 
-xdescribe('FeatureFlip', () => {
+describe('FeatureFlip', () => {
   let fixture: ComponentFixture<ExampleComponentContainer>;
 
   beforeEach(async(() => {
