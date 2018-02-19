@@ -1,33 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Mock } from 'ts-mocks';
-import { FEATURE_TOGGLES } from './feature-toggles';
 import { FlipadelphiaComponent } from './flipadelphia.component';
-import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
+import { FlipperService } from './flipper.service';
+import { TestFlipadelphia } from './test-fixtures';
 
 describe('FlipadelphiaComponent', () => {
   let fixture: ComponentFixture<FlipadelphiaComponent>;
+  let componentInstance: FlipadelphiaComponent;
+  let mockFlipperService: FlipperService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipadelphiaComponent ],
-      providers: [
-        { provide: FEATURE_TOGGLES,
-          useValue: { bar: false,
-                      bazz: true,
-                      bizz: true,
-                      buzz: false,
-                      foo: true }
-        },
-        { provide: FLIPPER_SERVICE,
-          useValue: new Mock<FlipperService>({ disable: Mock.ANY_FUNC,
-                                               enable: Mock.ANY_FUNC,
-                                               isEnabled: () => Promise.resolve(false) }).Object }
-      ]
+      declarations: [ FlipadelphiaComponent ]
     })
     .compileComponents()
     .then(() => {
+      mockFlipperService = new Mock<FlipperService>({ disable: Mock.ANY_FUNC,
+                                                      enable: Mock.ANY_FUNC,
+                                                      isEnabled: () => false }).Object;
       fixture = TestBed.createComponent(FlipadelphiaComponent);
+      componentInstance = fixture.componentInstance;
+      componentInstance.flipadelphia = new TestFlipadelphia(mockFlipperService);
       fixture.detectChanges();
     });
   }));
@@ -51,13 +45,13 @@ describe('FlipadelphiaComponent', () => {
     const unchecked = fixture.debugElement.query(By.css('#bar'));
     unchecked.nativeElement.click();
     fixture.detectChanges();
-    expect(TestBed.get(FLIPPER_SERVICE).enable).toHaveBeenCalledWith('bar');
+    expect(mockFlipperService.enable).toHaveBeenCalledWith('bar');
   });
 
   it('should update the toggle state to false when you uncheck one', () => {
     const checked = fixture.debugElement.query(By.css('#foo'));
     checked.nativeElement.click();
     fixture.detectChanges();
-    expect(TestBed.get(FLIPPER_SERVICE).disable).toHaveBeenCalledWith('foo');
+    expect(mockFlipperService.disable).toHaveBeenCalledWith('foo');
   });
 });

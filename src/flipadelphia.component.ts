@@ -1,42 +1,36 @@
-import { Component, Inject } from '@angular/core';
-import { FEATURE_TOGGLES, FeatureToggles } from './feature-toggles';
-import { FLIPPER_SERVICE, FlipperService } from './flipper.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Flipadelphia } from './flipadelphia';
 
 @Component({
   selector: 'flipadelphia',
   template: `
     <ul>
-      <li *ngFor='let toggle of toggles'>
+      <li *ngFor='let flip of flips'>
         <label>
           <input type='checkbox'
-            [id]='toggle.key'
-            [checked]='toggle.value'
+            [id]='flip'
+            [checked]='flipadelphia[flip]'
             (change)='setToggleState($event.target)'/>
-          {{ toggle.key }}
+          {{ flip }}
         </label>
       </li>
     </ul>
   `
 })
-export class FlipadelphiaComponent {
-  toggles: any;
+export class FlipadelphiaComponent implements OnInit {
+  @Input('flipadelphiaInstance') flipadelphia: Flipadelphia;
 
-  constructor(@Inject(FEATURE_TOGGLES) readonly featureToggles: FeatureToggles,
-              @Inject(FLIPPER_SERVICE) private readonly flipperService: FlipperService) {
-    this.loadToggles(featureToggles);
+  flips: string[] = [];
+
+  ngOnInit() {
+    this.flips = (this.flipadelphia.constructor as any).flips as string[];
   }
 
   public setToggleState(target: HTMLInputElement) {
     if (target.checked) {
-      this.flipperService.enable(target.id);
+      this.flipadelphia.flipperService.enable(target.id);
     } else {
-      this.flipperService.disable(target.id);
+      this.flipadelphia.flipperService.disable(target.id);
     }
-  }
-
-  private async loadToggles(featureToggles: FeatureToggles) {
-    const toggles = Object.keys(featureToggles);
-    const values = await Promise.all(toggles.map(key => this.flipperService.isEnabled(key)));
-    this.toggles = toggles.map((toggle, index) => ({ key: toggle, value: values[index] }));
   }
 }
