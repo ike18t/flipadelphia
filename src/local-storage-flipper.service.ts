@@ -1,31 +1,29 @@
 import { FlipperService } from './flipper.service';
 
 export class LocalStorageFlipperService implements FlipperService {
-  readonly LOCAL_STORAGE_KEY = 'FLIPADELPHIA';
+  constructor(private readonly storageKey = 'FLIPADELPHIA',
+              private readonly localStorage = window.localStorage) {}
 
-  constructor(public localStorage = window.localStorage) {}
-
-  private get enabledToggles() {
-    return JSON.parse(this.localStorage.getItem(this.LOCAL_STORAGE_KEY) as string) || [] as string[];
+  private get toggles(): { [key: string]: boolean } {
+    return JSON.parse(this.localStorage.getItem(this.storageKey) as string) || {};
   }
 
   disable(toggleName: string): void {
-    if (!this.isEnabled(toggleName)) {
-      return;
-    }
-    this.localStorage.setItem(this.LOCAL_STORAGE_KEY,
-                              JSON.stringify(this.enabledToggles.filter((toggle: string) => toggle !== toggleName)));
+    this.toggle(toggleName, false);
   }
 
   enable(toggleName: string): void {
-    if (this.isEnabled(toggleName)) {
-      return;
-    }
-    this.localStorage.setItem(this.LOCAL_STORAGE_KEY,
-                              JSON.stringify(this.enabledToggles.concat(toggleName)));
+    this.toggle(toggleName, true);
   }
 
-  isEnabled(toggleName: string): boolean {
-    return this.enabledToggles.includes(toggleName);
+  isEnabled(toggleName: string, defaultValue: boolean = false): boolean {
+    return this.toggles[toggleName] || defaultValue;
+  }
+
+  private toggle(toggleName: string, enable: boolean) {
+    const toggles = this.toggles;
+    toggles[toggleName] = enable;
+    this.localStorage.setItem(this.storageKey,
+                              JSON.stringify(toggles));
   }
 }

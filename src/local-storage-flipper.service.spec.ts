@@ -6,63 +6,61 @@ describe('LocalStorageFlipperService', () => {
   let mockStorage: Mock<Storage>;
 
   beforeEach(() => {
-    service = new LocalStorageFlipperService((mockStorage = new Mock<Storage>()).Object);
+    service = new LocalStorageFlipperService('FLIPADELPHIA', (mockStorage = new Mock<Storage>()).Object);
   });
 
   describe('isEnabled', () => {
-    it('returns true if the key is returned from the persisted array', () => {
-      mockStorage.extend({ getItem: () => '["foo", "bar"]' });
-      expect(service.isEnabled('bar')).toBe(true);
+    beforeEach(() => {
+      mockStorage.extend({ getItem: () => '{"foo": true, "bar": false }' });
     });
 
-    it('returns false if the key is not returned from the persisted array and the initial value is false', () => {
-      mockStorage.extend({ getItem: () => '["foo"]' });
-      expect(service.isEnabled('bar')).toBe(false);
+    it('returns true if the key is returned from the persisted object', () => {
+      expect(service.isEnabled('foo')).toBe(true);
     });
 
-    it('uses the correct key for local storage lookup', () => {
-      mockStorage.extend({ getItem: () => '[]' });
+    it('returns false if the value is false in the persisted object and the initial value is false', () => {
+      expect(service.isEnabled('bar', false)).toBe(false);
+    });
+
+    it('returns true if the default value true and there is no key in storage', () => {
+      expect(service.isEnabled('bah', true)).toBe(true);
+    });
+
+    it('uses the provided key for local storage lookup', () => {
       service.isEnabled('bar');
       expect(mockStorage.Object.getItem).toHaveBeenCalledWith('FLIPADELPHIA');
     });
   });
 
   describe('enable', () => {
-    it('does not add an already enabled toggle to storage', () => {
-      mockStorage.extend({ getItem: () => '["bar"]',
-                           setItem: Mock.ANY_FUNC });
-      service.enable('bar');
-      expect(mockStorage.Object.setItem).not.toHaveBeenCalled();
-    });
-
     it('adds toggle to storage', () => {
-      mockStorage.extend({ getItem: () => '[]',
+      mockStorage.extend({ getItem: () => '{"foo":false}',
                            setItem: Mock.ANY_FUNC });
       service.enable('bar');
-      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '["bar"]');
+      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '{"foo":false,"bar":true}');
     });
 
-    it('appends the toggle to storage array', () => {
-      mockStorage.extend({ getItem: () => '["foo"]',
+    it('updates value in storage', () => {
+      mockStorage.extend({ getItem: () => '{"bar": false}',
                            setItem: Mock.ANY_FUNC });
       service.enable('bar');
-      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '["foo","bar"]');
+      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '{"bar":true}');
     });
   });
 
   describe('disable', () => {
-    it('does not write to local storage if the toggle is already disabled', () => {
-      mockStorage.extend({ getItem: () => '[]',
+    it('adds toggle to storage', () => {
+      mockStorage.extend({ getItem: () => '{"foo":false}',
                            setItem: Mock.ANY_FUNC });
       service.disable('bar');
-      expect(mockStorage.Object.setItem).not.toHaveBeenCalled();
+      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '{"foo":false,"bar":false}');
     });
 
-    it('removes the toggle from local storage', () => {
-      mockStorage.extend({ getItem: () => '["foo"]',
+    it('updates value in storage', () => {
+      mockStorage.extend({ getItem: () => '{"bar": true}',
                            setItem: Mock.ANY_FUNC });
-      service.disable('foo');
-      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '[]');
+      service.disable('bar');
+      expect(mockStorage.Object.setItem).toHaveBeenCalledWith('FLIPADELPHIA', '{"bar":false}');
     });
   });
 });

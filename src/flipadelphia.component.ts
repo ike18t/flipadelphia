@@ -3,16 +3,21 @@ import { Flipadelphia } from './flipadelphia';
 
 @Component({
   selector: 'flipadelphia',
+  styles: [
+    'ul { list-style: none; }',
+    '.message { display: block; }'
+  ],
   template: `
     <ul>
-      <li *ngFor='let flip of flips'>
+      <li *ngFor='let flipName of flipKeys'>
         <label>
           <input type='checkbox'
-            [id]='flip'
-            [checked]='flipadelphia[flip]'
+            [id]='flipName'
+            [checked]='flipadelphia[flipName]'
             (change)='setToggleState($event.target)'/>
-          {{ flip }}
+          {{ flipName }} (default: {{ flips[flipName].default }})
         </label>
+        <span class="message">{{ flips[flipName].message }}</span>
       </li>
     </ul>
   `
@@ -20,10 +25,13 @@ import { Flipadelphia } from './flipadelphia';
 export class FlipadelphiaComponent implements OnInit {
   @Input('flipadelphiaInstance') flipadelphia: Flipadelphia;
 
-  flips: string[] = [];
+  flips: Flips = {};
+  get flipKeys() {
+    return Object.keys(this.flips);
+  }
 
   ngOnInit() {
-    this.flips = (this.flipadelphia.constructor as any).flips as string[];
+    this.flips = (this.flipadelphia.constructor as any).flips as Flips;
   }
 
   public setToggleState(target: HTMLInputElement) {
@@ -33,4 +41,8 @@ export class FlipadelphiaComponent implements OnInit {
       this.flipadelphia.flipperService.disable(target.id);
     }
   }
+}
+
+export interface Flips {
+  [key: string]: boolean;
 }
