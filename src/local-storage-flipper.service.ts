@@ -17,7 +17,8 @@ export class LocalStorageFlipperService implements FlipperService {
   }
 
   isEnabled(toggleName: string, defaultValue: boolean = false): boolean {
-    return this.toggles[toggleName] || defaultValue;
+    const toggleValue = this.toggles[toggleName];
+    return toggleValue === undefined ? defaultValue : toggleValue;
   }
 
   private toggle(toggleName: string, enable: boolean) {

@@ -19,7 +19,7 @@ describe('LocalStorageFlipperService', () => {
     });
 
     it('returns false if the value is false in the persisted object and the initial value is false', () => {
-      expect(service.isEnabled('bar', false)).toBe(false);
+      expect(service.isEnabled('bar', true)).toBe(false);
     });
 
     it('returns true if the default value true and there is no key in storage', () => {
