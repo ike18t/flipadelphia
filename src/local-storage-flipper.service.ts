@@ -4,7 +4,7 @@ export class LocalStorageFlipperService implements FlipperService {
   constructor(private readonly storageKey = 'FLIPADELPHIA',
               private readonly localStorage = window.localStorage) {}
 
-  private get toggles(): { [key: string]: boolean } {
+  private get toggles(): { [key: string]: boolean | undefined } {
     return JSON.parse(this.localStorage.getItem(this.storageKey) as string) || {};
   }
 

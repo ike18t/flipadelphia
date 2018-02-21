@@ -7,7 +7,7 @@ import { FlipadelphiaComponent } from './flipadelphia.component';
     FlipadelphiaComponent
   ],
   exports: [
-    FlipadelphiaComponent,
+    FlipadelphiaComponent
   ],
   imports: [
     CommonModule
