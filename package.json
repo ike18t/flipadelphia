@@ -1,20 +1,11 @@
 {
   "name": "flipadelphia",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Feature toggle library for angular",
   "main": "dist/index.js",
-  "files": [
-    "definitions",
-    "dist",
-    "LICENSE",
-    "README"
-  ],
-  "typings": "definitions/index",
-  "typescript": {
-    "definition": "definitions/index"
-  },
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && ngc -p tsconfig.publish.json",
     "clean": "rm -rf dist coverage",
     "lint": "tslint --project tsconfig.json",
     "release": "npm run lint && npm run test && npm run build && standard-version",
@@ -25,11 +16,12 @@
     "url": "git+https://github.com/ike18t/flipadelphia.git"
   },
   "keywords": [
+    "Angular",
     "Feature Toggle",
     "TypeScript"
   ],
   "author": "Isaac Datlof <ike18t@gmail.com>",
-  "contributors": [],
+  "contributors": ["Brandon Domingue <getsaf@gmail.com>"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ike18t/flipadelphia/issues"
