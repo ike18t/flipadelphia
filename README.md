@@ -5,22 +5,24 @@
 A customizable feature toggle library with an angular component UI.
 
 ## Setup:
-Instantiate extend Flipadelphia and addd toggles like below:
+Extend the Flipadelphia class and add toggles with the Flip decorator like below:
 
 ```typescript
 import { Flip, Flipadelphia } from './flipadelphia';
-  
+
 export class MyFeatureToggles extends Flipadelphia {
   @Flip() foo: boolean;
   @Flip(true) bar: boolean;
   @Flip(true, 'This toggle is for bah') bah: boolean;
-  
+
   // constructor is necessary if you make your toggles @Injectable
   constructor() {
     super();
   }
 }
 ```
+
+The Flip decorator takes 2 params (defaultValue: boolean, descriptionForUI: string)
 
 You may also pass an adapter that implements the provided FlipperService interface to the Flipadelphia base constructor.
 
@@ -29,7 +31,7 @@ import { Flip, Flipadelphia, LocalStorageFlipperService } from './flipadelphia';
 
 export class MyFeatureToggles extends Flipadelphia {
   @Flip() foo: boolean;
-  
+
   constructor() {
     // LocalStorageFlipperService is the default with a key of FLIPADELPHIA
     super(new LocalStorageFlipperService('CustomKey'));
@@ -57,5 +59,5 @@ If you would like to update a toggle w/o the UI you can add your custom key or t
 * Add the flipadelphia component to your site somewhere and provide your Flipadelphia extended class as an input
 
 ``` typescript
-<flipadelphia flipadelphiaInstance="youToggles"></flipadelphia>
+<flipadelphia [flipadelphiaInstance]="yourToggles"></flipadelphia>
 ```
