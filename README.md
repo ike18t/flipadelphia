@@ -1,85 +1,61 @@
-9b3f31247 2018-02-21 11:52:46 -0500 Isaac Datlof | chore: flipadelphia
-diff --git a/src/app/app-routing.module.ts b/src/app/app-routing.module.ts
+[![Build Status](https://travis-ci.org/ike18t/flipadelphia.png?branch=master)](https://travis-ci.org/ike18t/flipadelphia)
+[![npm version](https://badge.fury.io/js/flipadelphia.svg)](https://badge.fury.io/js/flipadelphia)
 
-+import { FlipadelphiaWrapperComponent } from '@my-common';
-@@ -44,6 +45,7 @@ const routes: Routes = [
-+  { path: 'toggles', component: FlipadelphiaWrapperComponent, resolve: { translations: TranslationsResolver } },
+# Flipadelphia
+A customizable feature toggle library with an angular component UI.
 
-diff --git a/src/modules/common/components/flipadelphia-wrapper.component.ts b/src/modules/common/components/flipadelphia-wrapper.component.ts
-new file mode 100644
-index 000000000..dc253a39d
---- /dev/null
-+++ b/src/modules/common/components/flipadelphia-wrapper.component.ts
-@@ -0,0 +1,7 @@
-+import { Component } from '@angular/core';
-+import { MyToggles } from '../my-toggles';
-+
-+@Component({ template: '<flipadelphia [flipadelphiaInstance]="toggles"></flipadelphia>' })
-+export class FlipadelphiaWrapperComponent {
-+  constructor(public toggles: MyToggles) {}
-+}
+## Setup:
+Instantiate extend Flipadelphia and addd toggles like below:
 
-diff --git a/src/modules/common/index.ts b/src/modules/common/index.ts
-index bfea4aa34..427fbeeb0 100644
---- a/src/modules/common/index.ts
-+++ b/src/modules/common/index.ts
-@@ -62,3 +62,5 @@ export { ObjectEntitlementService } from './services/object-entitlement.service'
-+export { FlipadelphiaWrapperComponent } from './components/flipadelphia-wrapper.component';
-+export { MyToggles } from './my-toggles';
+```typescript
+import { Flip, Flipadelphia } from './flipadelphia';
+  
+export class MyFeatureToggles extends Flipadelphia {
+  @Flip() foo: boolean;
+  @Flip(true) bar: boolean;
+  @Flip(true, 'This toggle is for bah') bah: boolean;
+  
+  // constructor is necessary if you make your toggles @Injectable
+  constructor() {
+    super();
+  }
+}
+```
 
-diff --git a/src/modules/common/my-common.module.ts b/src/modules/common/my-common.module.ts
-index aaab880b1..f7b0b4d6c 100644
---- a/src/modules/common/my-common.module.ts
-+++ b/src/modules/common/my-common.module.ts
-+import { Flipadelphia, FlipadelphiaModule } from 'flipadelphia';
-+import { MyToggles } from './my-toggles';
-+import { FlipadelphiaWrapperComponent } from './components/flipadelphia-wrapper.component';
+You may also pass an adapter that implements the provided FlipperService interface to the Flipadelphia base constructor.
 
+```typescript
+import { Flip, Flipadelphia, LocalStorageFlipperService } from './flipadelphia';
 
- @NgModule({
-+  imports: [FlipadelphiaModule],
-+    FlipadelphiaWrapperComponent
-+  ],
-+  entryComponents: [
-+    FlipadelphiaWrapperComponent
-   ],
-   exports: [
-+    FlipadelphiaWrapperComponent
-   ]
- })
- export class MyCommonModule {
-@@ -87,6 +95,7 @@ export class MyCommonModule {
-       ngModule: MyCommonModule,
-       providers: [
-+        MyToggles,
-       ]
-     };
-   }
+export class MyFeatureToggles extends Flipadelphia {
+  @Flip() foo: boolean;
+  
+  constructor() {
+    // LocalStorageFlipperService is the default with a key of FLIPADELPHIA
+    super(new LocalStorageFlipperService('CustomKey'));
+  }
+}
 
-diff --git a/src/modules/common/my-toggles.ts b/src/modules/common/my-toggles.ts
-new file mode 100644
-index 000000000..b8cce5972
---- /dev/null
-+++ b/src/modules/common/my-toggles.ts
-@@ -0,0 +1,12 @@
-+import { Injectable } from '@angular/core';
-+import { Flip, Flipadelphia } from 'flipadelphia';
-+
-+@Injectable()
-+export class MyToggles extends Flipadelphia {
-+  @Flip(false, 'This is a message for foo') foo: boolean;
-+  @Flip(true) bar: boolean;
-+
-+  constructor() {
-+    super();
-+  }
-+}
+```
 
-SOME COMPONENT HTML:
-@@ -1,5 +1,5 @@
-+<div *ngIf="toggles.bar">
+Then use the getters on an instance of your toggle class:
 
-SOME COMPONENT TS:
-+import { MyToggles } from '@mycommon';
+```typescript
+const myToggles = new MyFeatureToggles();
+expect(myToggles.foo).toBe(false);
+```
 
-+  constructor(public toggles: MyToggles) { }
+If you use angular you may want to consider setting up as a provider for DI.
+
+If you would like to update a toggle w/o the UI you can add your custom key or the default "FLIPADELPIA" to local storage with a value of
+```
+{"toggleName": booleanState}
+```
+
+### For the UI:
+* Import FlipadelphiaModule into your module
+* Add the flipadelphia component to your site somewhere and provide your Flipadelphia extended class as an input
+
+``` typescript
+<flipadelphia flipadelphiaInstance="youToggles"></flipadelphia>
+```
