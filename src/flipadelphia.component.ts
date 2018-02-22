@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Flipadelphia } from './flipadelphia';
+import { Flips } from './flips';
 
 @Component({
   selector: 'flipadelphia',
@@ -41,8 +42,4 @@ export class FlipadelphiaComponent implements OnInit {
       this.flipadelphia.flipperService.disable(target.id);
     }
   }
-}
-
-export interface Flips {
-  [key: string]: boolean;
 }
