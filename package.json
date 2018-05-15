@@ -1,6 +1,6 @@
 {
   "name": "flipadelphia",
-  "version": "0.1.0-rc.2",
+  "version": "1.0.0",
   "description": "Feature toggle library for angular",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
