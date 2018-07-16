@@ -1,10 +1,14 @@
 [![Build Status](https://travis-ci.org/ike18t/flipadelphia.png?branch=master)](https://travis-ci.org/ike18t/flipadelphia)
 [![npm version](https://badge.fury.io/js/flipadelphia.svg)](https://badge.fury.io/js/flipadelphia)
 
-# Flipadelphia
+## Flipadelphia
+
 A customizable feature toggle library with an angular component UI.
 
-## Setup:
+
+[StackBlitz Example](https://stackblitz.com/edit/flipadelphia-example?file=app%2Ffeature-toggles.ts)
+
+### Setup:
 Extend the Flipadelphia class and add toggles with the Flip decorator like below:
 
 ```typescript
