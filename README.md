@@ -1,5 +1,7 @@
-[![Build Status](https://travis-ci.org/ike18t/flipadelphia.png?branch=master)](https://travis-ci.org/ike18t/flipadelphia)
 [![npm version](https://badge.fury.io/js/flipadelphia.svg)](https://badge.fury.io/js/flipadelphia)
+[![Build Status](https://travis-ci.org/ike18t/flipadelphia.png?branch=master)](https://travis-ci.org/ike18t/flipadelphia)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/1097b591d192e711f17c/test_coverage)](https://codeclimate.com/github/ike18t/flipadelphia/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1097b591d192e711f17c/maintainability)](https://codeclimate.com/github/ike18t/flipadelphia/maintainability)
 
 ## Flipadelphia
 

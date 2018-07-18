@@ -21,15 +21,24 @@ module.exports = (config: any) => {
     logLevel: config.LOG_INFO,
     port: 9876,
     preprocessors: {
-      '**/*.ts': ['karma-typescript']
+      'src/**/!(*spec).ts': ['coverage'],
+      '**/*.ts': ['karma-typescript'] // tslint:disable-line:object-literal-sort-keys
     },
-    reporters: ['dots', 'karma-typescript', 'kjhtml'],
+    reporters: ['dots', 'karma-typescript', 'kjhtml', 'coverage'],
     singleRun: true,
 
     karmaTypescriptConfig: {
       compilerOptions: {
         lib: ['ES2015', 'DOM']
       }
+    },
+
+    coverageReporter: {
+      dir: 'coverage',
+      reporters: [
+        { type: 'html', subdir: '.' },
+        { type: 'lcov', subdir: '.' }
+      ]
     }
   });
 };

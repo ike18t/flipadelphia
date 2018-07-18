@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-VERSIONS="5.0 5.1 5 6"
+VERSIONS="5 6"
 PACKAGES="common compiler compiler-cli core platform-browser platform-browser-dynamic"
 
 for version in $VERSIONS

@@ -1,13 +1,16 @@
 language: node_js
 node_js:
-  - "v8.0.0"
+  - "8"
 sudo: required
 dist: trusty
 addons:
-    chrome: stable
+  chrome: stable
 before_script:
-    - "sudo chown root /opt/google/chrome/chrome-sandbox"
-    - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
+  - sudo chown root /opt/google/chrome/chrome-sandbox
+  - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 before_install:
   - npm cache clean --force
 script: npm run test:angular-versions
@@ -18,3 +21,9 @@ matrix:
         - ike18t@gmail.com
       on_success: change
       on_failure: change
+env:
+  global:
+    - CC_TEST_REPORTER_ID=fce3c9d56fbf42ea72174f3e5665bf0934df4d690d38a4d262bd15d98d05a4bc
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
